@@ -1,0 +1,42 @@
+
+        "0": {
+            "name": "CALM",
+            "description": "Driver is close to personal baseline.",
+            "alert": false
+        },
+    
+        "1": {
+            "name": "MILD_VARIATION",
+            "description": "Small deviation from baseline.",
+            "alert": false
+        },
+        "2": {
+            "name": "MODERATE_VARIATION",
+            "description": "Noticeable change in vocal characteristics.",
+            "alert": false
+        },
+        "3": {
+            "name": "ELEVATED",
+            "description": "Stress indicators are increasing.",
+            "alert": true
+        },
+        "4": {
+            "name": "HIGH",
+            "description": "Strong deviation from baseline.",
+            "alert": true
+        },
+        "5": {
+            "name": "CRITICAL",
+            "description": "Very strong deviation requiring attention.",
+            "alert": true
+        }
+    },
+    "thresholds": {
+        "level_1": 15,
+        "level_2": 30,
+        "level_3": 45,
+        "level_4": 65,
+        "level_5": 80
+    },
+    "alert_level": 3,
+    "trend_window": 3
