@@ -1,0 +1,1776 @@
+/* =========================================================
+   SILENT CO-DRIVER
+   F1 RACE CONTROL DASHBOARD
+   VIBRANT RED / WHITE / BLACK
+   ========================================================= */
+
+/* ---------- FONTS ---------- */
+
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&display=swap');
+
+
+/* ---------- RESET ---------- */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    background: #050505;
+    color: #f5f5f5;
+    font-family: "Rajdhani", Arial, sans-serif;
+    overflow-x: hidden;
+}
+
+button,
+input {
+    font-family: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   VARIABLES
+   ========================================================= */
+
+:root {
+    --black: #050505;
+    --black-2: #080808;
+    --black-3: #0d0d0d;
+
+    --panel: #101010;
+    --panel-2: #151515;
+    --panel-3: #1c1c1c;
+
+    --white: #ffffff;
+    --white-soft: #dedede;
+
+    --muted: #858585;
+    --muted-dark: #4f4f4f;
+
+    --border: #292929;
+
+    --red: #e10600;
+    --red-bright: #ff1710;
+    --red-dark: #9c0500;
+
+    --green: #35d07f;
+    --yellow: #f5b942;
+}
+
+
+/* =========================================================
+   APP
+   ========================================================= */
+
+.app {
+    display: flex;
+    min-height: 100vh;
+    background: #050505;
+}
+
+
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
+
+.sidebar {
+    width: 250px;
+    min-height: 100vh;
+    flex-shrink: 0;
+
+    background:
+        linear-gradient(
+            180deg,
+            #0b0b0b 0%,
+            #050505 100%
+        );
+
+    border-right: 1px solid var(--border);
+
+    padding: 28px 18px;
+
+    display: flex;
+    flex-direction: column;
+
+    position: sticky;
+    top: 0;
+
+    z-index: 100;
+}
+
+
+/* =========================================================
+   BRAND
+   ========================================================= */
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 45px;
+}
+
+.brand-mark {
+    width: 43px;
+    height: 43px;
+
+    background: #ffffff;
+    color: #050505;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-family: "Barlow Condensed", Arial, sans-serif;
+
+    font-size: 15px;
+    font-weight: 900;
+
+    transform: skew(-8deg);
+
+    border-left: 6px solid var(--red);
+}
+
+.brand h2 {
+    font-family: "Barlow Condensed", Arial, sans-serif;
+
+    font-size: 16px;
+    line-height: .9;
+
+    letter-spacing: 2px;
+
+    font-weight: 900;
+}
+
+
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
+
+nav {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.nav-item {
+    width: 100%;
+
+    background: transparent;
+
+    border: 1px solid transparent;
+
+    color: var(--muted);
+
+    padding: 13px 14px;
+
+    border-radius: 3px;
+
+    text-align: left;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    letter-spacing: .8px;
+
+    transition: .2s ease;
+}
+
+.nav-item span {
+    width: 28px;
+    display: inline-block;
+}
+
+.nav-item:hover {
+    background: #171717;
+    color: white;
+    border-color: #333333;
+}
+
+.nav-item.active {
+    background: #ffffff;
+    color: #050505;
+
+    border-color: #ffffff;
+
+    font-weight: 900;
+
+    box-shadow:
+        5px 0 0 var(--red);
+}
+
+
+/* =========================================================
+   SYSTEM STATUS
+   ========================================================= */
+
+.system-status {
+    margin-top: auto;
+
+    color: var(--muted);
+
+    font-size: 10px;
+
+    letter-spacing: 1.5px;
+
+    padding: 15px 5px;
+}
+
+.status-dot {
+    display: inline-block;
+
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: var(--green);
+
+    margin-right: 7px;
+
+    box-shadow:
+        0 0 10px rgba(53, 208, 127, .6);
+}
+
+
+/* =========================================================
+   MAIN
+   ========================================================= */
+
+.main {
+    flex: 1;
+
+    min-width: 0;
+
+    max-width: 1600px;
+
+    padding: 30px 38px;
+
+    position: relative;
+
+    isolation: isolate;
+
+    overflow: hidden;
+
+    border-left: 3px solid var(--red);
+}
+
+
+/* =========================================================
+   F1 TRACK BACKGROUND
+   ========================================================= */
+
+.f1-track-background {
+    position: absolute;
+
+    width: 1250px;
+    height: 820px;
+
+    right: -100px;
+    top: 90px;
+
+    z-index: -2;
+
+    pointer-events: none;
+
+    opacity: .92;
+}
+
+.f1-track-background img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: contain;
+}
+
+
+/* RED AMBIENT GLOW */
+
+.f1-track-background::before {
+    content: "";
+
+    position: absolute;
+
+    width: 550px;
+    height: 550px;
+
+    right: 180px;
+    top: 100px;
+
+    background: var(--red);
+
+    border-radius: 50%;
+
+    filter: blur(180px);
+
+    opacity: .12;
+}
+
+
+/* Keep dashboard above track */
+
+.main > *:not(.f1-track-background) {
+    position: relative;
+    z-index: 5;
+}
+
+
+/* =========================================================
+   TOP BAR
+   ========================================================= */
+
+.topbar {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-end;
+
+    gap: 20px;
+
+    padding-bottom: 25px;
+
+    border-bottom: 1px solid var(--border);
+
+    margin-bottom: 18px;
+}
+
+
+/* =========================================================
+   RACE STATUS
+   ========================================================= */
+
+.race-status {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    color: var(--muted);
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: 1.8px;
+
+    margin-bottom: 6px;
+}
+
+.race-light {
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+
+    background: var(--red-bright);
+
+    box-shadow:
+        0 0 12px rgba(225, 6, 0, .9);
+
+    animation:
+        raceLight 1s infinite;
+}
+
+@keyframes raceLight {
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: .3;
+    }
+}
+
+
+/* =========================================================
+   HEADINGS
+   ========================================================= */
+
+.eyebrow {
+    color: var(--muted);
+
+    font-size: 10px;
+
+    letter-spacing: 2.5px;
+
+    margin-bottom: 6px;
+}
+
+h1 {
+    font-family:
+        "Barlow Condensed",
+        Arial,
+        sans-serif;
+
+    font-size: 45px;
+
+    line-height: .9;
+
+    font-weight: 900;
+
+    letter-spacing: -.5px;
+}
+
+
+/* =========================================================
+   TOP RIGHT
+   ========================================================= */
+
+.topbar-right {
+    display: flex;
+    gap: 10px;
+}
+
+.session,
+.driver {
+    background: #0b0b0b;
+
+    border: 1px solid var(--border);
+
+    padding: 9px 13px;
+
+    border-radius: 3px;
+
+    color: var(--muted);
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: 1px;
+}
+
+
+/* =========================================================
+   F1 CHEVRONS
+   ========================================================= */
+
+.race-chevron {
+    display: flex;
+
+    gap: 1px;
+
+    height: 25px;
+
+    overflow: hidden;
+
+    margin-top: 8px;
+}
+
+.race-chevron span {
+    font-family: Arial, sans-serif;
+
+    font-size: 30px;
+
+    line-height: 20px;
+
+    font-weight: 900;
+
+    color: var(--red);
+
+    transform: skewX(-10deg);
+}
+
+.race-chevron span:nth-child(2) {
+    opacity: .75;
+}
+
+.race-chevron span:nth-child(3) {
+    opacity: .55;
+}
+
+.race-chevron span:nth-child(4) {
+    opacity: .35;
+}
+
+.race-chevron span:nth-child(5) {
+    opacity: .15;
+}
+
+
+/* =========================================================
+   CHECKERED STRIPE
+   ========================================================= */
+
+.checkered-bar {
+    height: 11px;
+
+    margin-bottom: 18px;
+
+    background:
+        conic-gradient(
+            #ffffff 25%,
+            #050505 0 50%,
+            #ffffff 0 75%,
+            #050505 0
+        );
+
+    background-size: 22px 22px;
+
+    border-top: 1px solid #292929;
+    border-bottom: 1px solid #292929;
+
+    opacity: .9;
+}
+
+
+/* =========================================================
+   TELEMETRY STRIP
+   ========================================================= */
+
+.telemetry-strip {
+    display: grid;
+
+    grid-template-columns:
+        repeat(6, 1fr);
+
+    background:
+        rgba(8, 8, 8, .96);
+
+    border: 1px solid var(--border);
+
+    margin-bottom: 18px;
+}
+
+.telemetry-strip > div {
+    padding: 13px 16px;
+
+    border-right: 1px solid var(--border);
+}
+
+.telemetry-strip > div:last-child {
+    border-right: none;
+}
+
+.telemetry-strip span {
+    display: block;
+
+    color: var(--muted);
+
+    font-size: 9px;
+
+    letter-spacing: 1.5px;
+
+    margin-bottom: 5px;
+}
+
+.telemetry-strip strong {
+    font-family:
+        "Barlow Condensed",
+        Arial,
+        sans-serif;
+
+    font-size: 25px;
+
+    font-weight: 900;
+}
+
+.telemetry-strip small {
+    color: var(--muted);
+}
+
+
+/* =========================================================
+   PANELS
+   ========================================================= */
+
+.panel,
+.state-panel,
+.metric-panel {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(18, 18, 18, .98),
+            rgba(7, 7, 7, .98)
+        );
+
+    border: 1px solid var(--border);
+
+    border-radius: 6px;
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+
+/* RED TOP EDGE */
+
+.panel::before,
+.state-panel::before,
+.metric-panel::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 3px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--red),
+            transparent 70%
+        );
+}
+
+
+/* =========================================================
+   PANEL
+   ========================================================= */
+
+.panel {
+    padding: 22px;
+
+    margin-bottom: 18px;
+}
+
+.panel-label {
+    color: var(--muted);
+
+    font-size: 10px;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 14px;
+}
+
+.panel-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 20px;
+}
+
+.panel-header h3 {
+    font-family:
+        "Barlow Condensed",
+        Arial,
+        sans-serif;
+
+    font-size: 15px;
+
+    letter-spacing: 1.2px;
+
+    font-weight: 900;
+}
+
+.panel-header > span {
+    color: var(--muted);
+
+    font-size: 10px;
+
+    letter-spacing: 1px;
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.hero-grid {
+    display: grid;
+
+    grid-template-columns:
+        2fr 1fr 1fr;
+
+    gap: 15px;
+
+    margin-bottom: 18px;
+}
+
+.state-panel {
+    padding: 25px;
+
+    min-height: 230px;
+
+    border-left:
+        4px solid var(--red);
+}
+
+.state-number {
+    font-family:
+        "Barlow Condensed",
+        Arial,
+        sans-serif;
+
+    font-size: 76px;
+
+    line-height: .9;
+
+    font-weight: 900;
+}
+
+.state-name {
+    font-family:
+        "Barlow Condensed",
+        Arial,
+        sans-serif;
+
+    font-size: 22px;
+
+    font-weight: 900;
+
+    margin-top: 10px;
+
+    letter-spacing: 1px;
+}
+
+.state-panel p {
+    color: var(--muted);
+
+    font-size: 12px;
+
+    margin-top: 7px;
+}
+
+
+/* =========================================================
+   RISK METER
+   ========================================================= */
+
+.risk-meter {
+    height: 7px;
+
+    width: 100%;
+
+    background: #292929;
+
+    margin-top: 18px;
+
+    overflow: hidden;
+}
+
+.risk-meter-fill {
+    width: 8%;
+
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--green),
+            var(--yellow),
+            var(--red)
+        );
+
+    transition: width .4s ease;
+}
+
+.risk-scale {
+    display: flex;
+
+    justify-content: space-between;
+
+    color: var(--muted-dark);
+
+    font-size: 8px;
+
+    margin-top: 5px;
+}
+
+
+/* =========================================================
+   WARNING LIGHTS
+   ========================================================= */
+
+.warning-lights {
+    display: flex;
+
+    gap: 5px;
+
+    margin-top: 15px;
+}
+
+.warning-lights span {
+    width: 28px;
+    height: 5px;
+
+    background: #292929;
+}
+
+.warning-lights span.active {
+    background: var(--red);
+
+    box-shadow:
+        0 0 9px rgba(225, 6, 0, .65);
+}
+
+
+/* =========================================================
+   METRIC PANELS
+   ========================================================= */
+
+.metric-panel {
+    padding: 25px;
+
+    min-height: 230px;
+}
+
+.metric-value {
+    font-family:
+        "Barlow Condensed",
+        Arial,
+        sans-serif;
+
+    font-size: 45px;
+
+    font-weight: 900;
+}
+
+.metric-unit {
+    color: var(--muted);
+
+    font-size: 12px;
+
+    margin-top: 4px;
+}
+
+
+/* =========================================================
+   TWO COLUMN
+   ========================================================= */
+
+.two-column {
+    display: grid;
+
+    grid-template-columns:
+        1.4fr 1fr;
+
+    gap: 18px;
+}
+
+
+/* =========================================================
+   LIVE TAG
+   ========================================================= */
+
+.live-tag {
+    border:
+        1px solid var(--green);
+
+    color:
+        var(--green) !important;
+
+    padding:
+        5px 8px;
+
+    border-radius:
+        3px;
+
+    font-size:
+        9px !important;
+
+    font-weight:
+        700;
+}
+
+
+/* =========================================================
+   RADIO WAVE
+   ========================================================= */
+
+.radio-wave {
+    height: 90px;
+
+    background: #070707;
+
+    border: 1px solid var(--border);
+
+    border-radius: 5px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 5px;
+
+    margin-bottom: 18px;
+}
+
+.radio-wave div {
+    width: 3px;
+    height: 20px;
+
+    background: white;
+
+    animation:
+        wave 1s infinite ease-in-out;
+}
+
+.radio-wave div:nth-child(2) {
+    animation-delay: .1s;
+}
+
+.radio-wave div:nth-child(3) {
+    animation-delay: .2s;
+}
+
+.radio-wave div:nth-child(4) {
+    animation-delay: .3s;
+}
+
+.radio-wave div:nth-child(5) {
+    animation-delay: .4s;
+}
+
+.radio-wave div:nth-child(6) {
+    animation-delay: .5s;
+}
+
+.radio-wave div:nth-child(7) {
+    animation-delay: .4s;
+}
+
+.radio-wave div:nth-child(8) {
+    animation-delay: .3s;
+}
+
+.radio-wave div:nth-child(9) {
+    animation-delay: .2s;
+}
+
+@keyframes wave {
+    0%,
+    100% {
+        transform: scaleY(.5);
+    }
+
+    50% {
+        transform: scaleY(2.1);
+    }
+}
+
+
+/* =========================================================
+   TRANSCRIPT
+   ========================================================= */
+
+.transcript {
+    color: #dedede;
+
+    font-size: 15px;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   AUDIO CONTROLS
+   ========================================================= */
+
+.audio-controls {
+    display: flex;
+
+    gap: 8px;
+
+    margin-top: 18px;
+}
+
+.upload-button {
+    background: white;
+
+    color: black;
+
+    border: none;
+
+    padding: 11px 16px;
+
+    border-radius: 3px;
+
+    font-size: 9px;
+
+    font-weight: 900;
+
+    letter-spacing: 1px;
+}
+
+.analyze-button {
+    background: var(--red);
+
+    color: white;
+
+    border: none;
+
+    padding: 11px 16px;
+
+    border-radius: 3px;
+
+    font-size: 9px;
+
+    font-weight: 900;
+
+    letter-spacing: 1px;
+}
+
+.analyze-button:hover {
+    background: var(--red-bright);
+
+    box-shadow:
+        0 0 15px rgba(225, 6, 0, .3);
+}
+
+.selected-file {
+    color: var(--muted);
+
+    font-size: 9px;
+
+    margin-top: 10px;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   AUDIO QUALITY
+   ========================================================= */
+
+.quality-good {
+    color: var(--green) !important;
+}
+
+.quality-row {
+    display: flex;
+
+    justify-content: space-between;
+
+    padding: 13px 0;
+
+    border-bottom:
+        1px solid var(--border);
+
+    font-size: 12px;
+}
+
+.quality-row:last-child {
+    border-bottom: none;
+}
+
+.quality-row span {
+    color: var(--muted);
+}
+
+.quality-row strong {
+    color: white;
+}
+
+
+/* =========================================================
+   FEATURE GRID
+   ========================================================= */
+
+.feature-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(6, 1fr);
+
+    gap: 10px;
+}
+
+.feature-card {
+    background: #151515;
+
+    border: 1px solid #292929;
+
+    padding: 17px;
+
+    border-radius: 4px;
+
+    transition: .2s ease;
+}
+
+.feature-card:hover {
+    border-color: var(--red);
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 5px 20px rgba(0,0,0,.3);
+}
+
+.feature-card span {
+    display: block;
+
+    color: var(--muted);
+
+    font-size: 9px;
+
+    letter-spacing: 1px;
+
+    margin-bottom: 10px;
+}
+
+.feature-card strong {
+    font-family:
+        "Barlow Condensed",
+        Arial,
+        sans-serif;
+
+    font-size: 25px;
+
+    font-weight: 900;
+}
+
+.feature-card small {
+    color: var(--muted);
+
+    font-size: 9px;
+}
+
+
+/* =========================================================
+   TREND
+   ========================================================= */
+
+.trend-chart {
+    height: 190px;
+
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            transparent 0,
+            transparent 37px,
+            #202020 38px
+        );
+
+    border-left:
+        1px solid var(--border);
+
+    border-bottom:
+        1px solid var(--border);
+
+    position: relative;
+
+    margin-left: 25px;
+
+    overflow: hidden;
+}
+
+.trend-line {
+    position: absolute;
+
+    left: -25px;
+
+    top: 0;
+
+    height: 190px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: space-between;
+}
+
+.trend-line span {
+    color: var(--muted);
+
+    font-size: 9px;
+}
+
+
+/* =========================================================
+   SAFETY
+   ========================================================= */
+
+.safety-panel {
+    background: #111111;
+
+    border: 1px solid var(--border);
+
+    border-left:
+        4px solid var(--green);
+
+    padding: 22px;
+
+    border-radius: 5px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 18px;
+}
+
+.safety-panel h2 {
+    font-family:
+        "Barlow Condensed",
+        Arial,
+        sans-serif;
+
+    font-size: 20px;
+
+    font-weight: 900;
+
+    margin-bottom: 7px;
+}
+
+.safety-panel p {
+    color: var(--muted);
+
+    font-size: 12px;
+}
+
+.demo-button {
+    background: white;
+
+    color: black;
+
+    border: none;
+
+    padding: 12px 20px;
+
+    border-radius: 3px;
+
+    font-size: 10px;
+
+    font-weight: 900;
+
+    letter-spacing: 1px;
+}
+
+.demo-button:hover {
+    background: var(--red);
+
+    color: white;
+}
+
+
+/* =========================================================
+   STATE COLORS
+   ========================================================= */
+
+.state-panel.level-warning {
+    border-left-color:
+        var(--yellow);
+}
+
+.state-panel.level-warning .state-number {
+    color:
+        var(--yellow);
+}
+
+.state-panel.level-danger {
+    border-left-color:
+        var(--red);
+}
+
+.state-panel.level-danger .state-number {
+    color:
+        var(--red);
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+footer {
+    text-align: center;
+
+    color: #505050;
+
+    font-size: 9px;
+
+    letter-spacing: 1.2px;
+
+    padding: 30px 0;
+}
+
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+::-webkit-scrollbar-track {
+    background: #050505;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #333333;
+
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--red);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1200px) {
+
+    .sidebar {
+        width: 210px;
+    }
+
+    .feature-grid {
+        grid-template-columns:
+            repeat(3, 1fr);
+    }
+
+    .telemetry-strip {
+        grid-template-columns:
+            repeat(3, 1fr);
+    }
+
+    .f1-track-background {
+        width: 1000px;
+
+        right: -350px;
+
+        opacity: .65;
+    }
+}
+
+
+@media (max-width: 900px) {
+
+    .sidebar {
+        width: 190px;
+    }
+
+    .main {
+        padding: 22px;
+    }
+
+    .hero-grid {
+        grid-template-columns:
+            1fr 1fr;
+    }
+
+    .state-panel {
+        grid-column:
+            span 2;
+    }
+
+    .two-column {
+        grid-template-columns:
+            1fr;
+    }
+
+    .feature-grid {
+        grid-template-columns:
+            repeat(3, 1fr);
+    }
+
+    .f1-track-background {
+        width: 850px;
+
+        right: -400px;
+
+        opacity: .5;
+    }
+}
+
+
+@media (max-width: 700px) {
+
+    .app {
+        display: block;
+    }
+
+    .sidebar {
+        width: 100%;
+
+        min-height: auto;
+
+        position: relative;
+
+        border-right: none;
+
+        border-bottom:
+            1px solid var(--border);
+
+        padding: 15px;
+    }
+
+    .brand {
+        margin-bottom: 15px;
+    }
+
+    nav {
+        display: grid;
+
+        grid-template-columns:
+            repeat(3, 1fr);
+
+        gap: 4px;
+    }
+
+    .nav-item {
+        text-align: center;
+
+        font-size: 9px;
+
+        padding: 10px 5px;
+    }
+
+    .nav-item span {
+        display: block;
+
+        width: auto;
+
+        margin-bottom: 3px;
+    }
+
+    .system-status {
+        display: none;
+    }
+
+    .main {
+        padding: 15px;
+    }
+
+    .topbar {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+    .topbar-right {
+        width: 100%;
+    }
+
+    .session,
+    .driver {
+        flex: 1;
+
+        text-align: center;
+    }
+
+    .telemetry-strip {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .hero-grid {
+        grid-template-columns:
+            1fr;
+    }
+
+    .state-panel {
+        grid-column: auto;
+    }
+
+    .feature-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .audio-controls {
+        flex-direction: column;
+    }
+
+    .upload-button,
+    .analyze-button {
+        width: 100%;
+    }
+
+    .safety-panel {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 15px;
+    }
+
+    .demo-button {
+        width: 100%;
+    }
+
+    .f1-track-background {
+        width: 750px;
+
+        right: -420px;
+
+        top: 350px;
+
+        opacity: .38;
+    }
+}
+
+
+@media (max-width: 450px) {
+
+    h1 {
+        font-size: 38px;
+    }
+
+    .state-number {
+        font-size: 68px;
+    }
+
+    .telemetry-strip {
+        grid-template-columns:
+            1fr 1fr;
+    }
+
+    .f1-track-background {
+        width: 650px;
+
+        right: -380px;
+
+        opacity: .28;
+    }
+}/* =========================================================
+   F1 LIVE TIMING STRIP
+========================================================= */
+
+.race-timing {
+
+    display: flex;
+
+    align-items: stretch;
+
+    background:
+        rgba(4,4,4,.96);
+
+    border:
+        1px solid #272727;
+
+    margin:
+        15px 0;
+
+    min-height: 55px;
+}
+
+
+.race-timing > div {
+
+    padding:
+        9px 15px;
+
+    border-right:
+        1px solid #222;
+
+    min-width: 90px;
+}
+
+
+.race-timing span {
+
+    display: block;
+
+    color: #555;
+
+    font-size: 7px;
+
+    letter-spacing: 1.2px;
+}
+
+
+.race-timing strong {
+
+    display: block;
+
+    font-family:
+        "Barlow Condensed";
+
+    font-size: 19px;
+
+    line-height: 1;
+
+    margin-top: 3px;
+}
+
+
+.race-timing small {
+
+    color: #555;
+
+    font-size: 6px;
+
+    letter-spacing: .7px;
+}
+
+
+.timing-title {
+
+    background:
+        var(--red);
+
+    color: white;
+
+    font-size: 8px;
+
+    font-weight: 900;
+
+    letter-spacing: 1px;
+
+    display: flex;
+
+    align-items: center;
+
+    min-width: 110px !important;
+}
+
+
+.timing-status {
+
+    margin-left: auto;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    color: #777;
+
+    font-size: 7px;
+
+    letter-spacing: 1px;
+}
+
+
+.timing-status i {
+
+    display: block;
+
+    width: 6px;
+
+    height: 6px;
+
+    background:
+        var(--green);
+
+    border-radius: 50%;
+
+    box-shadow:
+        0 0 8px var(--green);
+}
+
+
+@media(max-width:700px) {
+
+    .race-timing {
+        overflow-x: auto;
+    }
+
+    .timing-status {
+        display: none;
+    }
+
+}/* =========================================================
+   SILENT CO-DRIVER — F1 TRACK FIX
+========================================================= */
+
+html,
+body {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+.app {
+    width: 100%;
+    min-width: 0;
+    position: relative;
+    z-index: 5;
+}
+
+.main {
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    position: relative;
+    z-index: 5;
+    overflow-x: hidden;
+}
+
+
+/* F1 CIRCUIT */
+
+.track-background {
+    position: fixed !important;
+
+    width: 950px !important;
+    height: 650px !important;
+
+    right: 30px !important;
+    top: 190px !important;
+
+    z-index: 1 !important;
+
+    pointer-events: none;
+
+    opacity: 0.25 !important;
+
+    transform: rotate(-3deg);
+
+    filter:
+        brightness(2)
+        contrast(1.5)
+        drop-shadow(
+            0 0 18px
+            rgba(225, 6, 0, 0.45)
+        );
+}
+
+.track-background img {
+    width: 100% !important;
+    height: 100% !important;
+
+    object-fit: contain;
+
+    display: block;
+
+    opacity: 1 !important;
+
+    mix-blend-mode: screen;
+}
+
+
+/* Keep dashboard above track */
+
+.sidebar {
+    position: relative;
+    z-index: 10;
+}
+
+.main > * {
+    position: relative;
+    z-index: 5;
+}

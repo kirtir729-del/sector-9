@@ -1,0 +1,57 @@
+/* =========================================================
+   FIX — F1 TRACK MUST STAY BEHIND DASHBOARD
+   ========================================================= */
+
+.main {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+}
+
+/* F1 track = background layer */
+.f1-track-bg {
+    position: absolute;
+
+    top: 70px;
+    left: 150px;
+    right: 0;
+
+    height: 750px;
+
+    z-index: 0;
+
+    pointer-events: none;
+
+    opacity: 0.45;
+}
+
+/* Make SVG stay inside background layer */
+.f1-track-bg svg {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+}
+
+/* EVERYTHING ELSE = foreground */
+.main > *:not(.f1-track-bg) {
+    position: relative;
+
+    z-index: 2;
+}
+
+/* Make sure dashboard panels remain readable */
+.panel,
+.state-panel,
+.metric-panel,
+.hero-grid,
+.two-column,
+.telemetry-strip,
+.safety-panel,
+.topbar,
+footer,
+.checkered-bar {
+    position: relative;
+
+    z-index: 3;
+}

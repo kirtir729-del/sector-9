@@ -1,0 +1,1423 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+/* ============================================================
+   SILENT CO-DRIVER
+   F1 RACE ENGINEERING UI
+============================================================ */
+
+:root {
+    --red: #e10600;
+    --red-bright: #ff2118;
+    --red-dark: #790400;
+
+    --black: #030303;
+    --black-2: #070707;
+    --black-3: #0c0c0c;
+    --panel: rgba(10, 10, 10, 0.94);
+
+    --white: #f5f5f5;
+    --grey: #858585;
+    --grey-2: #505050;
+    --line: #292929;
+
+    --green: #35df79;
+    --yellow: #f5bd3f;
+
+    --mono: "JetBrains Mono", monospace;
+    --display: "Barlow Condensed", sans-serif;
+    --body: "Rajdhani", sans-serif;
+}
+
+/* ============================================================
+   RESET
+============================================================ */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    min-height: 100%;
+    background: var(--black);
+}
+
+body {
+    min-height: 100vh;
+
+    background:
+        radial-gradient(
+            circle at 75% 15%,
+            rgba(225, 6, 0, 0.10),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 20% 85%,
+            rgba(225, 6, 0, 0.035),
+            transparent 25%
+        ),
+        #030303;
+
+    color: var(--white);
+
+    font-family: var(--body);
+
+    overflow-x: hidden;
+}
+
+/* Carbon-fibre texture */
+
+body::before {
+    content: "";
+
+    position: fixed;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    z-index: 0;
+
+    opacity: 0.28;
+
+    background-image:
+        linear-gradient(
+            45deg,
+            rgba(255,255,255,.025) 25%,
+            transparent 25%
+        ),
+        linear-gradient(
+            -45deg,
+            rgba(255,255,255,.018) 25%,
+            transparent 25%
+        );
+
+    background-size: 10px 10px;
+}
+
+/* ============================================================
+   F1 RACETRACK BACKGROUND
+============================================================ */
+
+.track-bg {
+    position: fixed;
+
+    inset: 0;
+
+    width: 100vw;
+    height: 100vh;
+
+    pointer-events: none;
+
+    z-index: 0;
+
+    overflow: hidden;
+
+    opacity: 1;
+}
+
+/* actual SVG */
+
+.track-svg {
+    position: absolute;
+
+    width: 1050px;
+    height: 700px;
+
+    right: -20px;
+    top: 150px;
+
+    overflow: visible;
+
+    opacity: 0.16;
+
+    transform: rotate(-2deg);
+
+    filter:
+        drop-shadow(
+            0 0 16px
+            rgba(225, 6, 0, 0.25)
+        );
+}
+
+/* black/white circuit */
+
+.track-outline {
+    fill: none;
+
+    stroke: #ffffff;
+
+    stroke-width: 4;
+
+    stroke-linecap: round;
+
+    stroke-linejoin: round;
+
+    opacity: 0.30;
+}
+
+/* red racing line */
+
+.track-pulse {
+    fill: none;
+
+    stroke: var(--red);
+
+    stroke-width: 2;
+
+    stroke-linecap: round;
+
+    stroke-dasharray: 14 20;
+
+    opacity: 0.55;
+
+    animation:
+        trackRun 5s linear infinite;
+}
+
+@keyframes trackRun {
+    to {
+        stroke-dashoffset: -500;
+    }
+}
+
+.kerb-ticks {
+    fill: white;
+
+    opacity: 0.65;
+}
+
+/* moving speed streaks */
+
+.speed-lines {
+    position: absolute;
+
+    width: 45vw;
+    height: 100px;
+
+    right: 0;
+    top: 18%;
+
+    opacity: .15;
+
+    background:
+        repeating-linear-gradient(
+            -10deg,
+            transparent 0px,
+            transparent 18px,
+            rgba(225,6,0,.8) 19px,
+            transparent 21px
+        );
+
+    transform: skewX(-20deg);
+
+    animation: speedMove 2s linear infinite;
+}
+
+@keyframes speedMove {
+    from {
+        transform:
+            translateX(100px)
+            skewX(-20deg);
+    }
+
+    to {
+        transform:
+            translateX(-100px)
+            skewX(-20deg);
+    }
+}
+
+/* ============================================================
+   CHECKER STRIPS
+============================================================ */
+
+.checker-strip {
+    position: absolute;
+
+    width: 100%;
+
+    height: 7px;
+
+    left: 0;
+
+    background:
+        repeating-conic-gradient(
+            #fff 0 25%,
+            #111 0 50%
+        )
+        0 / 14px 14px;
+
+    opacity: .55;
+}
+
+.checker-strip.top {
+    top: 0;
+}
+
+.checker-strip.bottom {
+    bottom: 0;
+}
+
+/* ============================================================
+   RED RACE RAIL
+============================================================ */
+
+.rail {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 4px;
+    height: 100vh;
+
+    background:
+        linear-gradient(
+            to bottom,
+            var(--red),
+            transparent 75%
+        );
+
+    z-index: 50;
+
+    box-shadow:
+        0 0 18px
+        rgba(225,6,0,.35);
+}
+
+/* ============================================================
+   TOP BAR
+============================================================ */
+
+.topbar {
+    position: relative;
+
+    z-index: 10;
+
+    width: 100%;
+
+    min-height: 88px;
+
+    padding:
+        18px 36px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    border-bottom:
+        1px solid var(--line);
+
+    background:
+        rgba(3,3,3,.84);
+
+    backdrop-filter:
+        blur(10px);
+}
+
+/* red F1 stripe */
+
+.topbar::after {
+    content: "";
+
+    position: absolute;
+
+    bottom: -1px;
+    left: 36px;
+
+    width: 180px;
+    height: 3px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--red),
+            transparent
+        );
+
+    transform:
+        skewX(-30deg);
+}
+
+/* ============================================================
+   BRAND
+============================================================ */
+
+.brand {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+.brand-mark {
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: white;
+
+    color: #050505;
+
+    font-family: var(--display);
+
+    font-weight: 900;
+
+    font-size: 22px;
+
+    font-style: italic;
+
+    border-left:
+        6px solid var(--red);
+
+    transform:
+        skewX(-8deg);
+}
+
+.brand h1 {
+    font-family: var(--display);
+
+    font-size: 26px;
+
+    line-height: .85;
+
+    font-weight: 900;
+
+    letter-spacing: 1px;
+}
+
+.eyebrow {
+    margin-top: 5px;
+
+    color: var(--red);
+
+    font-family: var(--mono);
+
+    font-size: 8px;
+
+    letter-spacing: 2px;
+
+    font-weight: 700;
+}
+
+/* ============================================================
+   SESSION CONTROLS
+============================================================ */
+
+.session-controls {
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+}
+
+.field {
+    min-width: 105px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 4px;
+
+    padding:
+        7px 10px;
+
+    background:
+        #080808;
+
+    border:
+        1px solid #292929;
+}
+
+.field span {
+    color: #555;
+
+    font-family: var(--mono);
+
+    font-size: 7px;
+
+    letter-spacing: 1px;
+}
+
+.field select,
+.field input {
+    width: 100%;
+
+    border: none;
+
+    outline: none;
+
+    color: white;
+
+    background: transparent;
+
+    font-family: var(--mono);
+
+    font-size: 10px;
+
+    font-weight: 700;
+}
+
+.clock {
+    padding:
+        14px 16px;
+
+    border:
+        1px solid #292929;
+
+    background:
+        #080808;
+
+    color: var(--red);
+
+    font-family: var(--mono);
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    letter-spacing: 1px;
+}
+
+/* ============================================================
+   MAIN GRID
+============================================================ */
+
+.grid {
+    position: relative;
+
+    z-index: 5;
+
+    width: min(
+        1450px,
+        calc(100% - 72px)
+    );
+
+    margin:
+        25px auto 50px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(12, minmax(0, 1fr));
+
+    gap: 14px;
+}
+
+/* ============================================================
+   ALL PANELS
+============================================================ */
+
+.panel {
+    position: relative;
+
+    min-width: 0;
+
+    padding: 20px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(15,15,15,.96),
+            rgba(5,5,5,.95)
+        );
+
+    border:
+        1px solid #292929;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 10px 30px
+        rgba(0,0,0,.35);
+}
+
+/* red upper edge */
+
+.panel::before {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: 2px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--red),
+            transparent 60%
+        );
+}
+
+/* angled red corner */
+
+.panel::after {
+    content: "";
+
+    position: absolute;
+
+    right: -20px;
+    top: 0;
+
+    width: 70px;
+    height: 3px;
+
+    background: var(--red);
+
+    transform:
+        skewX(-35deg);
+}
+
+/* ============================================================
+   PANEL HEADINGS
+============================================================ */
+
+.panel h2 {
+    font-family: var(--display);
+
+    font-size: 21px;
+
+    font-weight: 800;
+
+    letter-spacing: .8px;
+
+    margin-bottom: 17px;
+}
+
+.panel h2::before {
+    content: "//";
+
+    color: var(--red);
+
+    margin-right: 8px;
+
+    font-family: var(--mono);
+
+    font-size: 12px;
+}
+
+.panel-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 15px;
+
+    margin-bottom: 15px;
+}
+
+.panel-header h2 {
+    margin-bottom: 0;
+}
+
+/* ============================================================
+   RADIO INTAKE
+============================================================ */
+
+.intake {
+    grid-column:
+        span 5;
+}
+
+.dropzone {
+    min-height: 155px;
+
+    border:
+        1px dashed #444;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.025),
+            rgba(225,6,0,.025)
+        );
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    text-align: center;
+
+    cursor: pointer;
+
+    transition: .2s;
+
+    position: relative;
+}
+
+.dropzone::before {
+    content: "RADIO";
+
+    position: absolute;
+
+    top: 10px;
+    left: 12px;
+
+    color: #444;
+
+    font-family: var(--mono);
+
+    font-size: 7px;
+
+    letter-spacing: 1.5px;
+}
+
+.dropzone:hover {
+    border-color:
+        var(--red);
+
+    background:
+        rgba(225,6,0,.04);
+}
+
+.dropzone strong {
+    font-family: var(--display);
+
+    font-size: 23px;
+
+    text-transform: uppercase;
+}
+
+.dropzone p {
+    font-size: 11px;
+
+    color: #aaa;
+}
+
+.dropzone .muted {
+    margin-top: 5px;
+}
+
+/* ============================================================
+   BUTTONS
+============================================================ */
+
+.actions {
+    display: flex;
+
+    gap: 7px;
+
+    margin-top: 10px;
+}
+
+.btn {
+    border: none;
+
+    cursor: pointer;
+
+    font-family: var(--mono);
+
+    font-size: 8px;
+
+    font-weight: 700;
+
+    letter-spacing: .8px;
+
+    padding:
+        11px 14px;
+
+    transition: .2s;
+}
+
+.btn.primary {
+    background:
+        var(--red);
+
+    color: white;
+}
+
+.btn.primary:hover {
+    background:
+        var(--red-bright);
+
+    box-shadow:
+        0 0 18px
+        rgba(225,6,0,.3);
+}
+
+.btn.ghost {
+    color: #bbb;
+
+    background:
+        #111;
+
+    border:
+        1px solid #333;
+}
+
+.btn.ghost:hover {
+    border-color:
+        var(--red);
+
+    color: white;
+}
+
+.btn:disabled {
+    opacity: .35;
+
+    cursor: not-allowed;
+}
+
+.btn.small {
+    padding:
+        8px 11px;
+
+    font-size: 7px;
+}
+
+/* ============================================================
+   TRANSCRIPT
+============================================================ */
+
+.transcript {
+    margin-top: 13px;
+
+    min-height: 55px;
+
+    padding:
+        11px;
+
+    background:
+        #080808;
+
+    border-left:
+        2px solid var(--red);
+
+    color: #ddd;
+
+    font-size: 12px;
+
+    line-height: 1.4;
+}
+
+.muted {
+    color: #555;
+}
+
+/* ============================================================
+   STRESS PULSE
+============================================================ */
+
+.pulse {
+    grid-column:
+        span 7;
+}
+
+#pulseCanvas {
+    width: 100%;
+
+    height: 120px;
+
+    display: block;
+
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            transparent,
+            transparent 29px,
+            rgba(255,255,255,.045) 30px
+        ),
+        #050505;
+
+    border:
+        1px solid #242424;
+}
+
+.stress-readout {
+    display: flex;
+
+    align-items: baseline;
+
+    gap: 12px;
+
+    margin-top: 10px;
+}
+
+.stress-index {
+    font-family: var(--display);
+
+    font-size: 54px;
+
+    font-weight: 900;
+
+    color: white;
+}
+
+.stress-label {
+    color: var(--red);
+
+    font-family: var(--mono);
+
+    font-size: 8px;
+
+    letter-spacing: 1.5px;
+}
+
+.biomarkers {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 5px;
+
+    margin-top: 10px;
+}
+
+/* ============================================================
+   DRIVER STATE
+============================================================ */
+
+.driver-state {
+    grid-column:
+        span 7;
+}
+
+.dstate-top {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding-bottom: 15px;
+
+    border-bottom:
+        1px solid #242424;
+}
+
+.dstate-score {
+    font-family: var(--display);
+
+    font-size: 68px;
+
+    font-weight: 900;
+
+    line-height: .8;
+}
+
+.dstate-label {
+    color: var(--green);
+
+    font-family: var(--mono);
+
+    font-size: 9px;
+
+    letter-spacing: 1px;
+}
+
+.dstate-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(5, 1fr);
+
+    gap: 6px;
+
+    margin-top: 12px;
+}
+
+.dstate-metric {
+    padding:
+        10px;
+
+    background:
+        #0b0b0b;
+
+    border:
+        1px solid #242424;
+}
+
+.dstate-metric span {
+    display: block;
+
+    color: #555;
+
+    font-family: var(--mono);
+
+    font-size: 7px;
+
+    margin-bottom: 6px;
+}
+
+.dstate-metric b {
+    font-family: var(--display);
+
+    font-size: 23px;
+}
+
+/* ============================================================
+   QUALITY / ANOMALY
+============================================================ */
+
+.quality-row,
+.anomaly-row {
+    margin-top: 12px;
+
+    padding:
+        9px;
+
+    background:
+        #080808;
+
+    border:
+        1px solid #242424;
+
+    font-family: var(--mono);
+
+    font-size: 8px;
+}
+
+/* ============================================================
+   ISSUE PANEL
+============================================================ */
+
+.issue {
+    grid-column:
+        span 5;
+}
+
+.issue-row {
+    display: grid;
+
+    grid-template-columns:
+        1.2fr .8fr;
+
+    gap: 15px;
+}
+
+.issue-label-tag {
+    display: block;
+
+    color: #555;
+
+    font-family: var(--mono);
+
+    font-size: 7px;
+
+    letter-spacing: 1.3px;
+
+    margin-bottom: 7px;
+}
+
+.issue-category {
+    color: white;
+
+    font-family: var(--display);
+
+    font-size: 30px;
+
+    font-weight: 800;
+}
+
+.issue-confidence {
+    margin-top: 5px;
+
+    color: var(--green);
+
+    font-family: var(--mono);
+
+    font-size: 8px;
+}
+
+.severity-meter {
+    width: 100%;
+
+    height: 10px;
+
+    background:
+        #252525;
+
+    overflow: hidden;
+}
+
+.severity-fill {
+    width: 0%;
+
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--green),
+            var(--yellow),
+            var(--red)
+        );
+
+    transition:
+        width .4s ease;
+}
+
+.severity-label {
+    margin-top: 7px;
+
+    color: var(--red);
+
+    font-family: var(--mono);
+
+    font-size: 9px;
+
+    font-weight: 700;
+}
+
+.recommendation {
+    margin-top: 15px;
+
+    padding:
+        13px;
+
+    min-height: 65px;
+
+    background:
+        rgba(225,6,0,.045);
+
+    border-left:
+        2px solid var(--red);
+
+    font-size: 11px;
+
+    line-height: 1.4;
+}
+
+/* ============================================================
+   LAP TIMELINE
+============================================================ */
+
+.lap-timeline {
+    grid-column:
+        span 8;
+}
+
+#lapChart {
+    width: 100% !important;
+
+    background:
+        #050505;
+
+    border:
+        1px solid #222;
+
+    margin-bottom: 10px;
+}
+
+.small {
+    font-size: 8px;
+}
+
+.lap-input-row {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-top: 10px;
+}
+
+/* ============================================================
+   ALERTS
+============================================================ */
+
+.alerts {
+    grid-column:
+        span 4;
+}
+
+.alerts-list {
+    list-style: none;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 6px;
+
+    max-height: 180px;
+
+    overflow-y: auto;
+}
+
+.alerts-list li {
+    padding:
+        10px;
+
+    background:
+        #090909;
+
+    border-left:
+        2px solid var(--red);
+
+    font-family: var(--mono);
+
+    font-size: 8px;
+
+    color: #bbb;
+}
+
+/* ============================================================
+   SESSION DEBRIEF
+============================================================ */
+
+.debrief {
+    grid-column:
+        1 / -1;
+}
+
+#debriefOutput {
+    min-height: 100px;
+
+    padding:
+        15px;
+
+    background:
+        #070707;
+
+    border:
+        1px solid #222;
+
+    font-size: 11px;
+
+    line-height: 1.6;
+}
+
+/* ============================================================
+   FOOTER
+============================================================ */
+
+.footer {
+    position: relative;
+
+    z-index: 5;
+
+    width: min(
+        1450px,
+        calc(100% - 72px)
+    );
+
+    margin:
+        0 auto 30px;
+
+    padding-top: 15px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    border-top:
+        1px solid #222;
+
+    color: #555;
+
+    font-family: var(--mono);
+
+    font-size: 7px;
+
+    letter-spacing: .5px;
+}
+
+.footer code {
+    color: var(--green);
+}
+
+/* ============================================================
+   SCROLLBAR
+============================================================ */
+
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background: #050505;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #333;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--red);
+}
+
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+
+@media(max-width: 1200px) {
+
+    .grid {
+        width:
+            calc(100% - 40px);
+    }
+
+    .track-svg {
+        width: 850px;
+        height: 600px;
+
+        right: -180px;
+
+        opacity: .11;
+    }
+
+    .dstate-grid {
+        grid-template-columns:
+            repeat(3, 1fr);
+    }
+
+    .intake,
+    .pulse,
+    .driver-state,
+    .issue {
+        grid-column:
+            span 6;
+    }
+
+    .lap-timeline {
+        grid-column:
+            span 8;
+    }
+
+    .alerts {
+        grid-column:
+            span 4;
+    }
+}
+
+@media(max-width: 850px) {
+
+    .topbar {
+        padding:
+            15px 20px;
+
+        align-items:
+            flex-start;
+
+        flex-direction:
+            column;
+    }
+
+    .session-controls {
+        width: 100%;
+    }
+
+    .field {
+        flex: 1;
+    }
+
+    .grid {
+        width:
+            calc(100% - 30px);
+
+        grid-template-columns:
+            1fr;
+    }
+
+    .intake,
+    .pulse,
+    .driver-state,
+    .issue,
+    .lap-timeline,
+    .alerts,
+    .debrief {
+        grid-column:
+            1 / -1;
+    }
+
+    .track-svg {
+        width: 700px;
+        height: 500px;
+
+        right: -280px;
+
+        opacity: .07;
+    }
+
+    .footer {
+        width:
+            calc(100% - 30px);
+
+        flex-direction:
+            column;
+    }
+}
+
+@media(max-width: 600px) {
+
+    .topbar {
+        padding:
+            13px;
+    }
+
+    .brand h1 {
+        font-size: 21px;
+    }
+
+    .session-controls {
+        flex-wrap: wrap;
+    }
+
+    .clock {
+        width: 100%;
+
+        text-align: center;
+    }
+
+    .grid {
+        width:
+            calc(100% - 20px);
+
+        margin-top: 15px;
+    }
+
+    .panel {
+        padding: 15px;
+    }
+
+    .issue-row {
+        grid-template-columns:
+            1fr;
+    }
+
+    .dstate-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .biomarkers {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .actions {
+        flex-direction:
+            column;
+    }
+
+    .actions .btn {
+        width: 100%;
+    }
+}

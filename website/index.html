@@ -1,0 +1,2462 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Silent Co-Driver — AI Race Engineering
+    </title>
+
+    <!-- =====================================================
+         GOOGLE FONTS
+    ====================================================== -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- =====================================================
+         CSS
+    ====================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     F1 RACETRACK BACKGROUND
+========================================================== -->
+
+<div
+    class="track-bg"
+    aria-hidden="true"
+>
+
+    <img
+        src="assets/f1-track.svg"
+        class="track-svg"
+        alt=""
+    >
+
+    <div class="track-overlay"></div>
+
+    <div class="track-red-glow"></div>
+
+</div>
+
+
+<!-- =========================================================
+     APPLICATION
+========================================================== -->
+
+<div class="app-shell">
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="sidebar">
+
+
+        <!-- BRAND -->
+
+        <div class="brand">
+
+            <div class="brand-symbol">
+                SC
+            </div>
+
+            <div class="brand-text">
+
+                <h1>
+                    SILENT
+                    <br>
+                    CO-DRIVER
+                </h1>
+
+                <span>
+                    AI RACE ENGINEERING
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- SYSTEM STATUS -->
+
+        <div class="session-light">
+
+            <span></span>
+
+            LIVE RACE ANALYSIS
+
+        </div>
+
+
+        <!-- =================================================
+             COMMANDS
+        ================================================== -->
+
+        <nav class="command-nav">
+
+
+            <div class="nav-label">
+                COMMANDS
+            </div>
+
+
+            <!-- OVERVIEW -->
+
+            <button
+                class="nav-item active"
+                data-section="overview"
+            >
+
+                <span class="nav-number">
+                    01
+                </span>
+
+                <span>
+                    OVERVIEW
+                </span>
+
+            </button>
+
+
+            <!-- AUDIO LIVE -->
+
+            <button
+                class="nav-item"
+                data-section="audio-live"
+            >
+
+                <span class="nav-number">
+                    02
+                </span>
+
+                <span>
+                    AUDIO LIVE
+                </span>
+
+            </button>
+
+
+            <!-- AUDIO DEMO -->
+
+            <button
+                class="nav-item"
+                data-section="audio-demo"
+            >
+
+                <span class="nav-number">
+                    03
+                </span>
+
+                <span>
+                    AUDIO DEMO
+                </span>
+
+            </button>
+
+
+            <!-- ANALYSED GRAPH -->
+
+            <button
+                class="nav-item"
+                data-section="analysis"
+            >
+
+                <span class="nav-number">
+                    04
+                </span>
+
+                <span>
+                    ANALYSED GRAPH
+                </span>
+
+            </button>
+
+
+            <!-- STRESS RANKING -->
+
+            <button
+                class="nav-item"
+                data-section="ranking"
+            >
+
+                <span class="nav-number">
+                    05
+                </span>
+
+                <span>
+                    STRESS RANKING
+                </span>
+
+            </button>
+
+
+            <!-- BASELINE -->
+
+            <button
+                class="nav-item"
+                data-section="baseline"
+            >
+
+                <span class="nav-number">
+                    06
+                </span>
+
+                <span>
+                    BASELINE
+                </span>
+
+            </button>
+
+
+            <!-- ALERTS -->
+
+            <button
+                class="nav-item"
+                data-section="alerts"
+            >
+
+                <span class="nav-number">
+                    07
+                </span>
+
+                <span>
+                    PIT WALL ALERTS
+                </span>
+
+            </button>
+
+
+            <!-- DEBRIEF -->
+
+            <button
+                class="nav-item"
+                data-section="debrief"
+            >
+
+                <span class="nav-number">
+                    08
+                </span>
+
+                <span>
+                    SESSION DEBRIEF
+                </span>
+
+            </button>
+
+
+        </nav>
+
+
+        <!-- SIDEBAR FOOTER -->
+
+        <div class="sidebar-footer">
+
+            <div>
+
+                SYSTEM
+
+                <strong>
+                    ONLINE
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                API
+
+                <strong id="sidebarApi">
+                    CHECKING
+                </strong>
+
+            </div>
+
+        </div>
+
+
+    </aside>
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+    ====================================================== -->
+
+    <main class="main-content">
+
+
+        <!-- =================================================
+             TOP BAR
+        ================================================== -->
+
+        <header class="topbar">
+
+
+            <div>
+
+                <div class="top-kicker">
+                    F1 DRIVER INTELLIGENCE SYSTEM
+                </div>
+
+
+                <h2>
+
+                    COMMAND
+
+                    <span>
+                        CENTER
+                    </span>
+
+                </h2>
+
+            </div>
+
+
+            <div class="top-status">
+
+
+                <div class="status-box">
+
+                    <small>
+                        SESSION
+                    </small>
+
+                    <strong>
+                        #01
+                    </strong>
+
+                </div>
+
+
+                <div class="status-box">
+
+                    <small>
+                        DRIVER
+                    </small>
+
+                    <strong id="topDriver">
+                        01
+                    </strong>
+
+                </div>
+
+
+                <div class="status-box">
+
+                    <small>
+                        LAP
+                    </small>
+
+                    <strong id="topLap">
+                        07
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+        </header>
+
+
+
+        <!-- =================================================
+             01 — OVERVIEW
+        ================================================== -->
+
+        <section
+            id="overview"
+            class="page-section active"
+        >
+
+
+            <!-- SECTION TITLE -->
+
+            <div class="section-heading">
+
+                <div>
+
+                    <span>
+                        01 / DRIVER PROFILE
+                    </span>
+
+                    <h3>
+                        DRIVER IDENTITY
+                    </h3>
+
+                </div>
+
+                <div class="section-line"></div>
+
+            </div>
+
+
+            <!-- DRIVER IDENTITY CARD -->
+
+            <div class="driver-card">
+
+
+                <div class="driver-number">
+                    01
+                </div>
+
+
+                <div class="driver-info">
+
+                    <span class="driver-tag">
+                        ACTIVE DRIVER
+                    </span>
+
+
+                    <h3 id="driverName">
+                        TEST DRIVER
+                    </h3>
+
+
+                    <div class="driver-meta">
+
+                        <span>
+
+                            TEAM
+
+                            <strong>
+                                SILENT RACING
+                            </strong>
+
+                        </span>
+
+
+                        <span>
+
+                            CAR
+
+                            <strong>
+                                SC-01
+                            </strong>
+
+                        </span>
+
+
+                        <span>
+
+                            STATUS
+
+                            <strong class="green-text">
+                                ON TRACK
+                            </strong>
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="driver-score">
+
+                    <span>
+                        DRIVER STATE
+                    </span>
+
+                    <strong id="overviewScore">
+                        72
+                    </strong>
+
+                    <small>
+                        / 100
+                    </small>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- DRIVER METRICS -->
+
+            <div class="metric-grid">
+
+
+                <div class="metric-card">
+
+                    <span>
+                        STRESS
+                    </span>
+
+                    <strong id="stressMetric">
+                        72
+                    </strong>
+
+                    <small>
+                        HIGH
+                    </small>
+
+                </div>
+
+
+                <div class="metric-card">
+
+                    <span>
+                        FATIGUE
+                    </span>
+
+                    <strong id="fatigueMetric">
+                        54
+                    </strong>
+
+                    <small>
+                        MODERATE
+                    </small>
+
+                </div>
+
+
+                <div class="metric-card">
+
+                    <span>
+                        VOICE INSTABILITY
+                    </span>
+
+                    <strong id="voiceMetric">
+                        68
+                    </strong>
+
+                    <small>
+                        ELEVATED
+                    </small>
+
+                </div>
+
+
+                <div class="metric-card">
+
+                    <span>
+                        COGNITIVE LOAD
+                    </span>
+
+                    <strong id="cognitiveMetric">
+                        61
+                    </strong>
+
+                    <small>
+                        MODERATE
+                    </small>
+
+                </div>
+
+
+                <div class="metric-card danger-card">
+
+                    <span>
+                        PERFORMANCE RISK
+                    </span>
+
+                    <strong id="riskMetric">
+                        81%
+                    </strong>
+
+                    <small>
+                        HIGH
+                    </small>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- GRAPH + LAST AUDIO -->
+
+            <div class="two-column">
+
+
+                <!-- GRAPH -->
+
+                <div class="panel large-panel">
+
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <span>
+                                LIVE ANALYSIS
+                            </span>
+
+                            <h3>
+                                STRESS / PACE TELEMETRY
+                            </h3>
+
+                        </div>
+
+
+                        <div class="live-badge">
+                            ● LIVE
+                        </div>
+
+                    </div>
+
+
+                    <div class="chart-wrap">
+
+                        <canvas
+                            id="stressChart"
+                        ></canvas>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- LAST AUDIO -->
+
+                <div class="panel">
+
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <span>
+                                RADIO SIGNAL
+                            </span>
+
+                            <h3>
+                                LAST RADIO CALL
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="audio-preview">
+
+
+                        <div class="audio-icon">
+                            🎙
+                        </div>
+
+
+                        <div>
+
+                            <strong>
+                                DRIVER RADIO
+                            </strong>
+
+                            <span>
+                                Lap 07 · 18:42:12
+                            </span>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="waveform">
+
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+
+                    </div>
+
+
+                    <button
+                        class="primary-btn"
+                        data-section-target="audio-live"
+                    >
+                        OPEN LIVE AUDIO
+                    </button>
+
+
+                </div>
+
+
+            </div>
+
+
+            <!-- ISSUE + ALERT -->
+
+            <div class="two-column">
+
+
+                <!-- ISSUE -->
+
+                <div class="panel">
+
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <span>
+                                CURRENT EVENT
+                            </span>
+
+                            <h3>
+                                ISSUE DETECTION
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="issue-display">
+
+
+                        <div>
+
+                            <small>
+                                REPORTED ISSUE
+                            </small>
+
+                            <strong id="issueText">
+                                REAR GRIP
+                            </strong>
+
+                        </div>
+
+
+                        <div class="severity">
+                            HIGH
+                        </div>
+
+
+                    </div>
+
+
+                    <p class="recommendation">
+
+                        Check rear tyre temperature,
+                        degradation trend and
+                        differential settings.
+
+                    </p>
+
+
+                </div>
+
+
+                <!-- PIT WALL ALERT -->
+
+                <div class="panel alert-panel">
+
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <span>
+                                PIT WALL
+                            </span>
+
+                            <h3>
+                                LATEST ALERT
+                            </h3>
+
+                        </div>
+
+
+                        <div class="alert-dot"></div>
+
+                    </div>
+
+
+                    <div class="alert-main">
+
+                        <strong>
+                            HIGH STRESS DETECTED
+                        </strong>
+
+                        <span>
+
+                            Voice instability increased
+                            compared with driver baseline.
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="alert-time">
+                        18:42:29
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             02 — AUDIO LIVE
+        ================================================== -->
+
+        <section
+            id="audio-live"
+            class="page-section"
+        >
+
+
+            <div class="section-heading">
+
+
+                <div>
+
+                    <span>
+                        02 / LIVE RADIO INPUT
+                    </span>
+
+                    <h3>
+                        DRIVER AUDIO LIVE
+                    </h3>
+
+                </div>
+
+
+                <div class="section-line"></div>
+
+
+            </div>
+
+
+            <!-- LIVE EXPLANATION -->
+
+            <div class="mode-banner live-mode-banner">
+
+                <div class="mode-icon">
+                    ●
+                </div>
+
+                <div>
+
+                    <strong>
+                        LIVE DRIVER TEST
+                    </strong>
+
+                    <span>
+                        Use the microphone to capture
+                        the driver's voice directly.
+                    </span>
+
+                </div>
+
+                <div class="mode-status">
+                    MICROPHONE
+                </div>
+
+            </div>
+
+
+            <!-- LIVE GRID -->
+
+            <div class="live-audio-grid">
+
+
+                <!-- MICROPHONE -->
+
+                <div class="panel live-mic-panel">
+
+
+                    <div class="panel-header">
+
+
+                        <div>
+
+                            <span>
+                                MICROPHONE CHANNEL
+                            </span>
+
+                            <h3>
+                                LIVE VOICE TEST
+                            </h3>
+
+                        </div>
+
+
+                        <div
+                            id="micStatus"
+                            class="live-badge"
+                        >
+                            STANDBY
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- MICROPHONE CIRCLE -->
+
+                    <div class="mic-circle">
+
+                        <div class="mic-inner">
+                            🎙
+                        </div>
+
+                    </div>
+
+
+                    <!-- TIMER -->
+
+                    <div
+                        id="liveTimer"
+                        class="live-timer"
+                    >
+                        00:00
+                    </div>
+
+
+                    <!-- WAVEFORM -->
+
+                    <div
+                        id="liveWaveform"
+                        class="live-waveform"
+                    >
+
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+
+                    </div>
+
+
+                    <!-- BUTTONS -->
+
+                    <div class="button-row">
+
+
+                        <button
+                            id="startLiveBtn"
+                            class="primary-btn"
+                        >
+                            ● START LIVE TEST
+                        </button>
+
+
+                        <button
+                            id="stopLiveBtn"
+                            class="secondary-btn"
+                            disabled
+                        >
+                            STOP
+                        </button>
+
+
+                    </div>
+
+
+                    <p class="audio-help">
+
+                        Speak naturally into the microphone.
+                        The captured audio will be processed
+                        for driver-state analysis.
+
+                    </p>
+
+
+                </div>
+
+
+                <!-- LIVE RESULTS -->
+
+                <div class="panel">
+
+
+                    <div class="panel-header">
+
+
+                        <div>
+
+                            <span>
+                                REAL-TIME AI
+                            </span>
+
+                            <h3>
+                                LIVE DRIVER STATE
+                            </h3>
+
+                        </div>
+
+
+                        <div
+                            id="liveAnalysisStatus"
+                            class="live-badge"
+                        >
+                            WAITING
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- STRESS -->
+
+                    <div class="live-score">
+
+
+                        <span>
+                            LIVE STRESS INDEX
+                        </span>
+
+
+                        <strong id="liveStress">
+                            --
+                        </strong>
+
+
+                        <small>
+                            / 100
+                        </small>
+
+
+                    </div>
+
+
+                    <!-- LIVE METRICS -->
+
+                    <div class="live-metrics">
+
+
+                        <div>
+
+                            <span>
+                                VOICE INSTABILITY
+                            </span>
+
+                            <strong id="liveVoice">
+                                --
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                FATIGUE
+                            </span>
+
+                            <strong id="liveFatigue">
+                                --
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                COGNITIVE LOAD
+                            </span>
+
+                            <strong id="liveCognitive">
+                                --
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                AUDIO QUALITY
+                            </span>
+
+                            <strong id="liveQuality">
+                                --
+                            </strong>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- TRANSCRIPT -->
+
+                    <div class="live-transcript">
+
+
+                        <span>
+                            LIVE TRANSCRIPT
+                        </span>
+
+
+                        <p id="liveTranscript">
+
+                            Waiting for driver audio...
+
+                        </p>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+            <!-- LIVE AUDIO TELEMETRY -->
+
+            <div class="panel live-signal-panel">
+
+
+                <div class="panel-header">
+
+
+                    <div>
+
+                        <span>
+                            MICROPHONE SIGNAL
+                        </span>
+
+                        <h3>
+                            LIVE AUDIO TELEMETRY
+                        </h3>
+
+                    </div>
+
+
+                    <span>
+                        INPUT LEVEL
+                    </span>
+
+
+                </div>
+
+
+                <canvas
+                    id="liveAudioChart"
+                    height="100"
+                ></canvas>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             03 — AUDIO DEMO
+        ================================================== -->
+
+        <section
+            id="audio-demo"
+            class="page-section"
+        >
+
+
+            <div class="section-heading">
+
+
+                <div>
+
+                    <span>
+                        03 / RECORDED ANALYSIS
+                    </span>
+
+                    <h3>
+                        AUDIO DEMO
+                    </h3>
+
+                </div>
+
+
+                <div class="section-line"></div>
+
+
+            </div>
+
+
+            <!-- DEMO EXPLANATION -->
+
+            <div class="mode-banner demo-mode-banner">
+
+
+                <div class="mode-icon">
+                    ▶
+                </div>
+
+
+                <div>
+
+                    <strong>
+                        DEMONSTRATION MODE
+                    </strong>
+
+                    <span>
+
+                        Upload a prerecorded driver
+                        radio clip and run the analysis.
+
+                    </span>
+
+                </div>
+
+
+                <div class="mode-status">
+                    FILE INPUT
+                </div>
+
+
+            </div>
+
+
+            <!-- DEMO GRID -->
+
+            <div class="audio-layout">
+
+
+                <!-- UPLOAD -->
+
+                <div class="panel upload-panel">
+
+
+                    <div class="panel-header">
+
+
+                        <div>
+
+                            <span>
+                                DEMO INPUT
+                            </span>
+
+                            <h3>
+                                UPLOAD DRIVER RADIO
+                            </h3>
+
+                        </div>
+
+
+                        <span class="signal-status">
+                            READY
+                        </span>
+
+
+                    </div>
+
+
+                    <!-- DROPZONE -->
+
+                    <label
+                        class="audio-dropzone"
+                        for="demoAudioFile"
+                    >
+
+
+                        <div class="upload-symbol">
+                            +
+                        </div>
+
+
+                        <strong>
+                            DROP DEMO AUDIO
+                        </strong>
+
+
+                        <span>
+                            WAV / MP3
+                        </span>
+
+
+                        <small>
+                            Click to browse files
+                        </small>
+
+
+                    </label>
+
+
+                    <input
+                        id="demoAudioFile"
+                        type="file"
+                        accept="audio/*"
+                        hidden
+                    >
+
+
+                    <!-- FILE NAME -->
+
+                    <div
+                        id="demoSelectedAudio"
+                        class="selected-audio"
+                    >
+
+                        No demo audio selected
+
+                    </div>
+
+
+                    <!-- PLAYER -->
+
+                    <audio
+                        id="demoAudioPlayer"
+                        controls
+                        style="
+                            width:100%;
+                            display:none;
+                        "
+                    ></audio>
+
+
+                    <br>
+
+
+                    <!-- ANALYSE -->
+
+                    <button
+                        id="analyseDemoBtn"
+                        class="primary-btn"
+                    >
+
+                        ANALYSE DEMO AUDIO
+
+                    </button>
+
+
+                </div>
+
+
+                <!-- DEMO RESULTS -->
+
+                <div class="panel">
+
+
+                    <div class="panel-header">
+
+
+                        <div>
+
+                            <span>
+                                AI ANALYSIS
+                            </span>
+
+                            <h3>
+                                DEMO RESULT
+                            </h3>
+
+                        </div>
+
+
+                        <div
+                            id="demoStatus"
+                            class="live-badge"
+                        >
+                            WAITING
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- SCORE -->
+
+                    <div class="analysis-result">
+
+
+                        <div class="result-score">
+
+
+                            <span>
+                                STRESS INDEX
+                            </span>
+
+
+                            <strong id="demoStress">
+                                --
+                            </strong>
+
+
+                            <small>
+                                / 100
+                            </small>
+
+
+                        </div>
+
+
+                        <!-- BARS -->
+
+                        <div class="result-bars">
+
+
+                            <div>
+
+                                <span>
+                                    Voice instability
+                                </span>
+
+
+                                <div>
+
+                                    <i
+                                        id="demoVoiceBar"
+                                        style="width:0%"
+                                    ></i>
+
+                                </div>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>
+                                    Fatigue
+                                </span>
+
+
+                                <div>
+
+                                    <i
+                                        id="demoFatigueBar"
+                                        style="width:0%"
+                                    ></i>
+
+                                </div>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>
+                                    Cognitive load
+                                </span>
+
+
+                                <div>
+
+                                    <i
+                                        id="demoCognitiveBar"
+                                        style="width:0%"
+                                    ></i>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- TRANSCRIPT -->
+
+                    <div class="transcript-box">
+
+
+                        <span>
+                            TRANSCRIPT
+                        </span>
+
+
+                        <p id="demoTranscript">
+
+                            No analysis performed yet.
+
+                        </p>
+
+
+                    </div>
+
+
+                    <!-- ISSUE -->
+
+                    <div class="issue-display">
+
+
+                        <div>
+
+                            <small>
+                                DETECTED ISSUE
+                            </small>
+
+
+                            <strong id="demoIssue">
+                                --
+                            </strong>
+
+                        </div>
+
+
+                        <div
+                            id="demoSeverity"
+                            class="severity"
+                        >
+                            --
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             04 — ANALYSED GRAPH
+        ================================================== -->
+
+        <section
+            id="analysis"
+            class="page-section"
+        >
+
+
+            <div class="section-heading">
+
+
+                <div>
+
+                    <span>
+                        04 / PERFORMANCE INTELLIGENCE
+                    </span>
+
+                    <h3>
+                        ANALYSED GRAPH
+                    </h3>
+
+                </div>
+
+
+                <div class="section-line"></div>
+
+
+            </div>
+
+
+            <div class="panel chart-panel">
+
+
+                <div class="panel-header">
+
+
+                    <div>
+
+                        <span>
+                            SESSION TELEMETRY
+                        </span>
+
+                        <h3>
+                            STRESS VS LAP PERFORMANCE
+                        </h3>
+
+                    </div>
+
+
+                    <div class="chart-legend">
+
+
+                        <span>
+
+                            <i class="red-dot"></i>
+
+                            STRESS
+
+                        </span>
+
+
+                        <span>
+
+                            <i class="white-dot"></i>
+
+                            PACE
+
+                        </span>
+
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="big-chart">
+
+                    <canvas
+                        id="analysisChart"
+                    ></canvas>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- GRAPH METRICS -->
+
+            <div class="metric-grid">
+
+
+                <div class="metric-card">
+
+                    <span>
+                        PEAK STRESS
+                    </span>
+
+                    <strong>
+                        82
+                    </strong>
+
+                    <small>
+                        LAP 08
+                    </small>
+
+                </div>
+
+
+                <div class="metric-card">
+
+                    <span>
+                        AVG STRESS
+                    </span>
+
+                    <strong>
+                        57
+                    </strong>
+
+                    <small>
+                        SESSION
+                    </small>
+
+                </div>
+
+
+                <div class="metric-card">
+
+                    <span>
+                        PACE CHANGE
+                    </span>
+
+                    <strong>
+                        -2.8%
+                    </strong>
+
+                    <small>
+                        LAP 08
+                    </small>
+
+                </div>
+
+
+                <div class="metric-card danger-card">
+
+                    <span>
+                        RISK SIGNAL
+                    </span>
+
+                    <strong>
+                        HIGH
+                    </strong>
+
+                    <small>
+                        ESCALATING
+                    </small>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             05 — STRESS RANKING
+        ================================================== -->
+
+        <section
+            id="ranking"
+            class="page-section"
+        >
+
+
+            <div class="section-heading">
+
+
+                <div>
+
+                    <span>
+                        05 / TEAM INTELLIGENCE
+                    </span>
+
+                    <h3>
+                        STRESS LEVEL RANKING
+                    </h3>
+
+                </div>
+
+
+                <div class="section-line"></div>
+
+
+            </div>
+
+
+            <div class="ranking-header">
+
+
+                <div>
+
+                    <span>
+                        LIVE SESSION
+                    </span>
+
+                    <strong>
+                        DRIVER STRESS ORDER
+                    </strong>
+
+                </div>
+
+
+                <span>
+                    LOWER = CALMER
+                </span>
+
+
+            </div>
+
+
+            <div class="ranking-list">
+
+
+                <!-- DRIVER 01 -->
+
+                <div class="ranking-row first">
+
+
+                    <div class="rank">
+                        01
+                    </div>
+
+
+                    <div class="driver-mini">
+
+                        <strong>
+                            TEST-01
+                        </strong>
+
+                        <span>
+                            ACTIVE
+                        </span>
+
+                    </div>
+
+
+                    <div class="rank-bar">
+
+                        <i style="width:82%"></i>
+
+                    </div>
+
+
+                    <div class="rank-score">
+                        82
+                    </div>
+
+
+                    <div class="rank-status high">
+                        HIGH
+                    </div>
+
+
+                </div>
+
+
+                <!-- DRIVER 44 -->
+
+                <div class="ranking-row">
+
+
+                    <div class="rank">
+                        02
+                    </div>
+
+
+                    <div class="driver-mini">
+
+                        <strong>
+                            TEST-44
+                        </strong>
+
+                        <span>
+                            ACTIVE
+                        </span>
+
+                    </div>
+
+
+                    <div class="rank-bar">
+
+                        <i style="width:64%"></i>
+
+                    </div>
+
+
+                    <div class="rank-score">
+                        64
+                    </div>
+
+
+                    <div class="rank-status moderate">
+                        MODERATE
+                    </div>
+
+
+                </div>
+
+
+                <!-- DRIVER 16 -->
+
+                <div class="ranking-row">
+
+
+                    <div class="rank">
+                        03
+                    </div>
+
+
+                    <div class="driver-mini">
+
+                        <strong>
+                            TEST-16
+                        </strong>
+
+                        <span>
+                            ACTIVE
+                        </span>
+
+                    </div>
+
+
+                    <div class="rank-bar">
+
+                        <i style="width:41%"></i>
+
+                    </div>
+
+
+                    <div class="rank-score">
+                        41
+                    </div>
+
+
+                    <div class="rank-status calm">
+                        STABLE
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+            <div class="ranking-note">
+
+                Ranking is populated from analysed
+                driver sessions. Demo values are shown
+                until real driver sessions are available.
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             06 — BASELINE
+        ================================================== -->
+
+        <section
+            id="baseline"
+            class="page-section"
+        >
+
+
+            <div class="section-heading">
+
+
+                <div>
+
+                    <span>
+                        06 / PERSONAL CALIBRATION
+                    </span>
+
+                    <h3>
+                        DRIVER BASELINE
+                    </h3>
+
+                </div>
+
+
+                <div class="section-line"></div>
+
+
+            </div>
+
+
+            <div class="baseline-card">
+
+
+                <div class="baseline-icon">
+                    🎙
+                </div>
+
+
+                <div>
+
+
+                    <span>
+                        PERSONAL CALM PROFILE
+                    </span>
+
+
+                    <h3>
+                        DRIVER #01
+                    </h3>
+
+
+                    <p>
+
+                        Compare future driver audio
+                        against this driver's normal
+                        voice characteristics.
+
+                    </p>
+
+
+                </div>
+
+
+                <div class="baseline-status">
+                    CALIBRATED
+                </div>
+
+
+            </div>
+
+
+            <div class="metric-grid">
+
+
+                <div class="metric-card">
+
+                    <span>
+                        NORMAL PITCH
+                    </span>
+
+                    <strong>
+                        184
+                    </strong>
+
+                    <small>
+                        Hz
+                    </small>
+
+                </div>
+
+
+                <div class="metric-card">
+
+                    <span>
+                        SPEECH RATE
+                    </span>
+
+                    <strong>
+                        4.2
+                    </strong>
+
+                    <small>
+                        WORDS/SEC
+                    </small>
+
+                </div>
+
+
+                <div class="metric-card">
+
+                    <span>
+                        ENERGY
+                    </span>
+
+                    <strong>
+                        0.61
+                    </strong>
+
+                    <small>
+                        BASELINE
+                    </small>
+
+                </div>
+
+
+                <div class="metric-card">
+
+                    <span>
+                        PAUSE RATE
+                    </span>
+
+                    <strong>
+                        0.18
+                    </strong>
+
+                    <small>
+                        SEC
+                    </small>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             07 — PIT WALL ALERTS
+        ================================================== -->
+
+        <section
+            id="alerts"
+            class="page-section"
+        >
+
+
+            <div class="section-heading">
+
+
+                <div>
+
+                    <span>
+                        07 / PIT WALL
+                    </span>
+
+                    <h3>
+                        INTELLIGENCE ALERTS
+                    </h3>
+
+                </div>
+
+
+                <div class="section-line"></div>
+
+
+            </div>
+
+
+            <div class="alert-feed">
+
+
+                <div class="feed-item critical">
+
+
+                    <time>
+                        18:42:12
+                    </time>
+
+
+                    <div>
+
+                        <strong>
+                            HIGH STRESS + REAR GRIP
+                        </strong>
+
+                        <span>
+
+                            Stress spike detected alongside
+                            rear-grip issue.
+
+                        </span>
+
+                    </div>
+
+
+                    <b>
+                        HIGH
+                    </b>
+
+
+                </div>
+
+
+                <div class="feed-item warning">
+
+
+                    <time>
+                        18:42:29
+                    </time>
+
+
+                    <div>
+
+                        <strong>
+                            VOICE INSTABILITY INCREASED
+                        </strong>
+
+                        <span>
+
+                            Voice instability increased
+                            compared with personal baseline.
+
+                        </span>
+
+                    </div>
+
+
+                    <b>
+                        WARN
+                    </b>
+
+
+                </div>
+
+
+                <div class="feed-item warning">
+
+
+                    <time>
+                        18:43:01
+                    </time>
+
+
+                    <div>
+
+                        <strong>
+                            LAP PACE DEGRADATION
+                        </strong>
+
+                        <span>
+
+                            Current lap is slower than
+                            recent session average.
+
+                        </span>
+
+                    </div>
+
+
+                    <b>
+                        WARN
+                    </b>
+
+
+                </div>
+
+
+                <div class="feed-item risk">
+
+
+                    <time>
+                        18:43:14
+                    </time>
+
+
+                    <div>
+
+                        <strong>
+                            PERFORMANCE RISK PREDICTED
+                        </strong>
+
+                        <span>
+
+                            Combined stress and pace trend
+                            indicates elevated degradation risk.
+
+                        </span>
+
+                    </div>
+
+
+                    <b>
+                        RISK
+                    </b>
+
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             08 — SESSION DEBRIEF
+        ================================================== -->
+
+        <section
+            id="debrief"
+            class="page-section"
+        >
+
+
+            <div class="section-heading">
+
+
+                <div>
+
+                    <span>
+                        08 / SESSION REVIEW
+                    </span>
+
+                    <h3>
+                        SESSION DEBRIEF
+                    </h3>
+
+                </div>
+
+
+                <div class="section-line"></div>
+
+
+            </div>
+
+
+            <!-- DEBRIEF STATS -->
+
+            <div class="debrief-grid">
+
+
+                <div class="debrief-stat">
+
+                    <span>
+                        TOTAL CALLS
+                    </span>
+
+                    <strong>
+                        08
+                    </strong>
+
+                </div>
+
+
+                <div class="debrief-stat">
+
+                    <span>
+                        HIGH STRESS CALLS
+                    </span>
+
+                    <strong>
+                        03
+                    </strong>
+
+                </div>
+
+
+                <div class="debrief-stat">
+
+                    <span>
+                        CRITICAL CALLS
+                    </span>
+
+                    <strong>
+                        01
+                    </strong>
+
+                </div>
+
+
+                <div class="debrief-stat">
+
+                    <span>
+                        PEAK STRESS
+                    </span>
+
+                    <strong>
+                        82
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- SUMMARY -->
+
+            <div class="panel debrief-output">
+
+
+                <span>
+                    AI SESSION SUMMARY
+                </span>
+
+
+                <h3>
+                    DRIVER STATE ESCALATED DURING
+                    HIGH-SPEED SECTION
+                </h3>
+
+
+                <p>
+
+                    Stress increased during the final
+                    sector while voice instability also
+                    moved above the driver's personal
+                    baseline. Recent pace degradation
+                    occurred during the same period.
+
+                </p>
+
+
+                <div class="recommendation-box">
+
+                    ENGINEER ACTION
+
+
+                    <strong>
+
+                        Check rear tyre temperatures,
+                        degradation trend, brake bias
+                        and differential settings.
+
+                    </strong>
+
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             FOOTER
+        ================================================== -->
+
+        <footer class="footer">
+
+
+            <span>
+                SILENT CO-DRIVER / AI RACE ENGINEERING
+            </span>
+
+
+            <span>
+
+                SYSTEM
+
+                <strong>
+                    ONLINE
+                </strong>
+
+            </span>
+
+
+        </footer>
+
+
+    </main>
+
+</div>
+
+
+
+<!-- =========================================================
+     CHART.JS
+========================================================== -->
+
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"
+></script>
+
+
+<!-- =========================================================
+     APPLICATION JAVASCRIPT
+========================================================== -->
+
+<script src="js/app.js"></script>
+
+
+</body>
+
+</html>
