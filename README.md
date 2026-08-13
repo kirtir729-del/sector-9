@@ -284,7 +284,7 @@ The dashboard lives in the `website/` directory and includes the F1 inspired int
 
 ---
 
-## Team EVOX
+## Team POSEIDON
 
 - **Katyayani** — Machine Learning and Voice Analysis
 - **Hajira** — AI, Backend, and Frontend
