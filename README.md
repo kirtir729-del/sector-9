@@ -5,7 +5,7 @@
 
 **Live Demo:** ADD YOUR DEPLOYED WEBSITE LINK HERE  
 **Repository:** https://github.com/kirtir729-del/sector-9  
-**Built by Team EVOX for GrandPrix 2026**
+**Built by Team POSEIDON for GrandPrix 2026**
 
 ---
 
