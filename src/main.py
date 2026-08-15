@@ -5,9 +5,14 @@ from flask import Flask, jsonify, request
 from feature_pipeline import run_feature_pipeline
 from baseline_manager import baseline_exists, load_baseline
 from risk_engine import analyze_driver_state
+from outlier_detector import detect_outliers
+from trend_detector import TrendDetector
+from alert_manager import generate_alert
 
 
 app = Flask(__name__)
+
+trend_detector = TrendDetector(3)
 
 UPLOAD_DIR = Path("data/uploads")
 UPLOAD_DIR.mkdir(
@@ -71,10 +76,37 @@ def analyze_audio():
             baseline=baseline
         )
 
+        # Driver State → Issue Detection
+        deviations = driver_state["deviations"]
+
+        outliers = detect_outliers(
+            deviations
+        )
+
+        # Track risk trend
+        trend_detector.add_level(
+            driver_state["level"]
+        )
+
+        trend = trend_detector.get_trend()
+
+        # Issue Detection → Alert Manager
+        alert = generate_alert(
+            driver_state,
+            outliers,
+            trend
+        )
+
+        # Final JSON response
         return jsonify({
             "status": "success",
             "features": features,
-            "driver_state": driver_state
+            "driver_state": driver_state,
+            "issues": {
+                "outliers": outliers,
+                "trend": trend
+            },
+            "alert": alert
         })
 
     except Exception as error:
@@ -94,7 +126,6 @@ if __name__ == "__main__":
 
     app.run(
         host="0.0.0.0",
-        port=5000,
+        port=5001,
         debug=True
     )
-    

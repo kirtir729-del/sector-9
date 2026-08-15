@@ -12,7 +12,7 @@ MODEL_FILE = Path(
 def train_stress_model(features, labels):
     """
     Train a basic stress classification model.
-    
+
     features:
         List of feature dictionaries.
 
@@ -82,6 +82,29 @@ def load_stress_model():
         )
 
     return joblib.load(MODEL_FILE)
+
+
+def predict_stress(features):
+    """
+    Predict the stress level for a single
+    feature sample.
+    """
+
+    data = load_stress_model()
+
+    model = data["model"]
+    feature_names = data["feature_names"]
+
+    values = [
+        features.get(name, 0.0)
+        for name in feature_names
+    ]
+
+    prediction = model.predict(
+        [values]
+    )[0]
+
+    return prediction
 
 
 if __name__ == "__main__":
