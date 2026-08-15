@@ -4,7 +4,6 @@
 
 Formula 1 teams track every variable on the car in real time: tire wear, brake temperatures, fuel load, all measured down to the millisecond. The driver, arguably the most important variable in the system, is still monitored almost entirely by ear. Sector 9 closes that gap by turning driver radio communication into structured, quantifiable data the pit wall can actually act on.
 
-**Live Demo:** [ADD LIVE LINK HERE]
 **Repository:** https://github.com/kirtir729-del/sector-9
 **Built by** Team Poseidon for GrandPrix 2026
 
