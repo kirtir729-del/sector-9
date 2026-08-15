@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { useGPS } from "@/hooks/use-gps";
+import { api } from "@/lib/api";
 
 import {
   s9,
@@ -58,6 +59,34 @@ function Sector9() {
   const [elapsed, setElapsed] = useState(0);
   const [sessionMs, setSessionMs] = useState(0);
 const gps = useGPS();
+useEffect(() => {
+  if (
+    gps.status !== "LOCKED" ||
+    gps.latitude === null ||
+    gps.longitude === null
+  ) {
+    return;
+  }
+
+  void api
+    .sendGPSTelemetry({
+      latitude: gps.latitude,
+      longitude: gps.longitude,
+      speed: gps.speed,
+      heading: gps.heading,
+      accuracy: gps.accuracy,
+    })
+    .catch((error) => {
+      console.error("GPS telemetry upload failed:", error);
+    });
+}, [
+  gps.status,
+  gps.latitude,
+  gps.longitude,
+  gps.speed,
+  gps.heading,
+  gps.accuracy,
+]);
 
   const recorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);

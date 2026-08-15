@@ -71,7 +71,14 @@ export type AnalysisResult = {
   timestamp: string;
   raw: unknown;
 };
-
+export type GPSTelemetry = {
+  latitude: number;
+  longitude: number;
+  speed: number | null;
+  heading: number | null;
+  accuracy: number | null;
+  timestamp?: string;
+};
 export type RankingEntry = {
   driver_id: string;
   name: string;
@@ -158,6 +165,15 @@ function toAnalysis(src: any): AnalysisResult {
 
 export const api = {
   health: () => request<{ status?: string }>("/api/health"),
+  async sendGPSTelemetry(gps: GPSTelemetry) {
+    return request<{
+      success: boolean;
+      telemetry: GPSTelemetry;
+    }>("/api/telemetry/gps", {
+      method: "POST",
+      body: JSON.stringify(gps),
+    });
+  },
 
   async drivers(): Promise<Driver[]> {
     const res = await request<any>("/api/drivers");
