@@ -18,12 +18,16 @@ MODEL_ID = (
     "wav2vec2-lg-xlsr-en-speech-emotion-recognition"
 )
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
 TRAINED_MODEL_PATH = os.path.join(
+    BASE_DIR,
     "sector9_trained_model",
     "sector9_classifier.pt"
 )
 
 LABELS_PATH = os.path.join(
+    BASE_DIR,
     "sector9_trained_model",
     "labels.json"
 )

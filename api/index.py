@@ -327,6 +327,62 @@ def demo_audio():
             "Monitor driver workload and correlate with current race conditions."
 
     })
+# =========================================================
+# GPS TELEMETRY
+# =========================================================
+
+@app.post("/api/telemetry/gps")
+def gps_telemetry():
+
+    data = request.get_json(silent=True) or {}
+
+    latitude = data.get("latitude")
+    longitude = data.get("longitude")
+    speed = data.get("speed")
+    heading = data.get("heading")
+    accuracy = data.get("accuracy")
+
+    if latitude is None or longitude is None:
+
+        return jsonify({
+            "success": False,
+            "error": "Latitude and longitude are required"
+        }), 400
+
+    try:
+
+        latitude = float(latitude)
+        longitude = float(longitude)
+
+        if speed is not None:
+            speed = float(speed)
+
+        if heading is not None:
+            heading = float(heading)
+
+        if accuracy is not None:
+            accuracy = float(accuracy)
+
+    except (TypeError, ValueError):
+
+        return jsonify({
+            "success": False,
+            "error": "Invalid GPS telemetry values"
+        }), 400
+
+    telemetry = {
+        "latitude": latitude,
+        "longitude": longitude,
+        "speed": speed,
+        "heading": heading,
+        "accuracy": accuracy,
+        "timestamp": time.time()
+    }
+
+    return jsonify({
+        "success": True,
+        "telemetry": telemetry
+    })
 
 
 # =========================================================
