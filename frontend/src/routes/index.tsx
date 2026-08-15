@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
+import { useGPS } from "@/hooks/use-gps";
 
 import {
   s9,
@@ -56,6 +57,7 @@ function Sector9() {
   const [runState, setRunState] = useState<RunState>("IDLE");
   const [elapsed, setElapsed] = useState(0);
   const [sessionMs, setSessionMs] = useState(0);
+const gps = useGPS();
 
   const recorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
@@ -175,6 +177,7 @@ function Sector9() {
             sector={data.telemetry.sector}
             lap={data.telemetry.lap}
             speed={data.telemetry.speed}
+            gps={gps}
           />
           <LiveAudio
             state={runState}
@@ -186,6 +189,48 @@ function Sector9() {
         </div>
 
         <TelemetryStrip telemetry={data.telemetry} />
+
+<div className="panel grid grid-cols-2 gap-4 p-4 sm:grid-cols-3 lg:grid-cols-6">
+  <div>
+    <span className="label-xs">GPS STATUS</span>
+    <p className="mt-1 font-mono text-sm">{gps.status}</p>
+  </div>
+
+  <div>
+    <span className="label-xs">LATITUDE</span>
+    <p className="mt-1 font-mono text-sm">
+      {gps.latitude !== null ? gps.latitude.toFixed(6) : "—"}
+    </p>
+  </div>
+
+  <div>
+    <span className="label-xs">LONGITUDE</span>
+    <p className="mt-1 font-mono text-sm">
+      {gps.longitude !== null ? gps.longitude.toFixed(6) : "—"}
+    </p>
+  </div>
+
+  <div>
+    <span className="label-xs">GPS SPEED</span>
+    <p className="mt-1 font-mono text-sm">
+      {gps.speed !== null ? `${gps.speed.toFixed(1)} km/h` : "—"}
+    </p>
+  </div>
+
+  <div>
+    <span className="label-xs">HEADING</span>
+    <p className="mt-1 font-mono text-sm">
+      {gps.heading !== null ? `${gps.heading.toFixed(0)}°` : "—"}
+    </p>
+  </div>
+
+  <div>
+    <span className="label-xs">ACCURACY</span>
+    <p className="mt-1 font-mono text-sm">
+      {gps.accuracy !== null ? `${gps.accuracy.toFixed(1)} m` : "—"}
+    </p>
+  </div>
+</div>
         <AudioIntelligence data={data} fresh={fresh} />
 
         <div className="grid gap-4 lg:grid-cols-2">
