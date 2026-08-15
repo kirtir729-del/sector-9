@@ -14,7 +14,7 @@ import { DriverProfile } from "@/components/s9/DriverProfile";
 import { TrackMap } from "@/components/s9/TrackMap";
 import { LiveAudio, type RunState } from "@/components/s9/LiveAudio";
 import { TelemetryStrip } from "@/components/s9/TelemetryStrip";
-import { AudioIntelligence } from "@/components/s9/AudioIntelligence";
+
 import { FeatureBars } from "@/components/s9/FeatureBars";
 import { Transcription } from "@/components/s9/Transcription";
 import { Recommendation } from "@/components/s9/Recommendation";
@@ -186,7 +186,7 @@ function Sector9() {
         </div>
 
         <TelemetryStrip telemetry={data.telemetry} />
-        <AudioIntelligence data={data} fresh={fresh} />
+        
 
         <div className="grid gap-4 lg:grid-cols-2">
           <FeatureBars features={data.features} />
